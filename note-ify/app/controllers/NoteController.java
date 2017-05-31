@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.dtos.NoteDTO;
+import controllers.security.SecurityTools;
 import models.Note;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Author: Voicu Hodrea
  * @Date: 31.05.2017
  */
+@SecurityTools.AuthenticatedWithPermission(permission = "note")
 public class NoteController extends Controller {
 
     private GenericService<Integer, Note> noteService =

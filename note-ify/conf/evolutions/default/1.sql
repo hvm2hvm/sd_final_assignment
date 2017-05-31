@@ -5,10 +5,10 @@
 
 create table account (
   id                            serial not null,
-  username                      varchar(255),
-  fullname                      varchar(255),
-  password_hash                 varchar(255),
-  token                         varchar(255),
+  username                      TEXT,
+  fullname                      TEXT,
+  password_hash                 TEXT,
+  token                         TEXT,
   constraint pk_account primary key (id)
 );
 

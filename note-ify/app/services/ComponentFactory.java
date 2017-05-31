@@ -3,6 +3,7 @@ package services;
 import models.Account;
 import models.ModelWithID;
 import repositories.GenericEbeanRepository;
+import repositories.NoteRepository;
 import repositories.Repository;
 
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import java.util.Map;
 public class ComponentFactory {
 
     private static AccountService accountService;
+    private static NoteService noteService;
+    private static NoteRepository noteRepository;
     private static Map<Class<? extends ModelWithID>, GenericFactory> genericFactories;
 
     static {
@@ -61,6 +64,20 @@ public class ComponentFactory {
                 getGenericFactory(Account.class).getRepository());
         }
         return accountService;
+    }
+
+    public static NoteRepository getNoteRepository() {
+        if (noteRepository == null) {
+            noteRepository = new NoteRepository();
+        }
+        return noteRepository;
+    }
+
+    public static NoteService getNoteService() {
+        if (noteService == null) {
+            noteService = new NoteService(getNoteRepository());
+        }
+        return noteService;
     }
 
 }

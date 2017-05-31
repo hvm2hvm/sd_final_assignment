@@ -22,3 +22,7 @@ GET     /api/note/:id           controllers.NoteController.get(id: Integer)
 POST    /api/note               controllers.NoteController.add
 PUT     /api/note/:id           controllers.NoteController.update(id: Integer)
 DELETE  /api/note/:id           controllers.NoteController.delete(id: Integer)
+
+# stats
+
+GET     /api/statistics         controllers.StatisticsController.get

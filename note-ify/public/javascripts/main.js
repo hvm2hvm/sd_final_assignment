@@ -145,8 +145,6 @@ function keyName(event) {
     return result;
 }
 
-var updateNoteTimeout;
-
 noteifyApp.controller("NoteifyController", function ($scope, rest) {
 
     $scope.currentUser = {};
@@ -154,36 +152,39 @@ noteifyApp.controller("NoteifyController", function ($scope, rest) {
     $scope.login = function(credentials) {
         rest.post("login", credentials).then(function(result) {
             $scope.currentUser = result.data;
+            $scope.refreshData();
         });
     };
 
     $scope.refreshCurrentUser = function() {
         rest.get("loggedIn").then(function(result) {
             $scope.currentUser = result.data;
+            $scope.refreshData();
         });
     };
 
     $scope.logout = function() {
         rest.post("logout").then(function(result) {
             $scope.currentUser = result.data;
+            $scope.refreshData();
         });
     };
 
     $scope.hasPermission = function(permission) {
         var found = false;
         if ($scope.currentUser == undefined ||
-            $scope.currentUser['permissions'] == undefined) {
+            $scope.currentUser['roles'] == undefined) {
             return false;
         }
-        $scope.currentUser['permissions'].forEach(function(p) {
-            if (p == permission) {
-                found = true;
-            }
+        $scope.currentUser.roles.forEach(function(r) {
+            r.permissions.forEach(function(p) {
+                if (p.name == permission) {
+                    found = true;
+                }
+            });
         });
         return found;
     };
-
-    $scope.refreshCurrentUser();
 
     $scope.update = function() {
         autosize.update($("textarea"));
@@ -193,6 +194,8 @@ noteifyApp.controller("NoteifyController", function ($scope, rest) {
 
     $scope.notes = [];
     $scope.notesById = {};
+
+    $scope.stats = {};
 
     $scope.refreshNotes = function() {
         rest.get("note").then(function(result) {
@@ -229,5 +232,25 @@ noteifyApp.controller("NoteifyController", function ($scope, rest) {
         }
     };
 
-    $scope.refreshNotes();
+    $scope.refreshStats = function() {
+        rest.get("statistics").then(function(result) {
+            var stats = result.data;
+
+            $scope.stats.roots = stats.numberOfRoots;
+            $scope.stats.leaves = stats.numberOfLeaves;
+            $scope.stats.notes = stats.numberOfNotes;
+        });
+    };
+
+    $scope.refreshData = function() {
+        if ($scope.hasPermission('note')) {
+            $scope.refreshNotes();
+        }
+        if ($scope.hasPermission('stats')) {
+            $scope.refreshStats();
+        }
+    };
+
+    $scope.refreshCurrentUser();
+
 });

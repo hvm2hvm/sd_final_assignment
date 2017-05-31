@@ -16,9 +16,17 @@ public class Account extends Model implements ModelWithID<Integer> {
 
     @Id
     private Integer id;
+
+    @Column(columnDefinition = "TEXT")
     private String username;
+
+    @Column(columnDefinition = "TEXT")
     private String fullname;
+
+    @Column(columnDefinition = "TEXT")
     private String passwordHash;
+
+    @Column(columnDefinition = "TEXT")
     private String token;
 
     @ManyToMany
