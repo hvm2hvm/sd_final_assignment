@@ -1,0 +1,23 @@
+
+.note {
+    background-color: #fada22;
+    border-style: solid;
+    border-color: #f4d522;
+    border-width: 1px;
+    color: #111111;
+    min-width: 400px;
+}
+
+.note:hover, .note.selected {
+    background-color: #f4d522;
+}
+
+.note>div>textarea {
+    background-color: transparent;
+    border-style: none;
+    min-height: 30px;
+    max-height: 800px;
+    width: 100%;
+    overflow: hidden;
+    resize: none;
+}

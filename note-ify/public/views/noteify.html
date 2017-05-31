@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="col-md-12">
+        <div ng-hide="currentUser['id'] != undefined"
+            class="pull-right">
+            <form>
+                <label for="username">User</label>
+                <input type="text" id="username" ng-model="credentials['username']" />
+                <label for="password">Password</label>
+                <input type="password" id="password" ng-model="credentials['password']" />
+                <button type="button" class="btn btn-primary"
+                        ng-click="login(credentials)">
+                    Login
+                </button>
+            </form>
+        </div>
+        <div ng-hide="currentUser['id'] == undefined"
+            class="pull-right">
+            Logged in as: {{currentUser['fullname']}} ({{currentUser['username']}})
+            <button type="button" class="btn btn-primary"
+                    ng-click="logout()">
+                Logout
+            </button>
+        </div>
+    </div>
+    <script type="text/ng-template" id="note-renderer.html">
+        <div class="note">
+            <div ng-if="!note.leaf">
+                <ng-repeat ng-repeat="note in note.childrenIds|notesFromIds:notesById"
+                           ng-include="'note-renderer.html'">
+                </ng-repeat>
+            </div>
+            <div ng-if="note.leaf">
+                <textarea ng-model="note.text" ng-change="updateNote(note)"></textarea>
+            </div>
+        </div>
+    </script>
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <ng-repeat ng-repeat="note in notes|topNotes" ng-include="'note-renderer.html'">
+            </ng-repeat>
+        </div>
+    </div>
+</div>
