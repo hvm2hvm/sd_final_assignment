@@ -7,4 +7,4 @@ Making the project work:
  * navigate in the browser to http://localhost:9000/
  * when prompted click on the "apply evolution" button
  * Run init-db.sql in postgres (using the same credentials)
- 
+ * you can now refresh the webpage and login with the users a/a or admin/admin
