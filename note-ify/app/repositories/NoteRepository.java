@@ -19,9 +19,8 @@ public class NoteRepository extends GenericEbeanRepository<Integer, Note> {
     }
 
     public int getNumberOfLeaves() {
-//        return this.finder.query().where().notIn("id",
-//                this.finder.query().fetch("parent").where().isNotNull("parent")).findCount();
-        return 0;
+        return this.finder.query().where().notIn("id",
+                this.finder.query().select("parent").where().isNotNull("parent").query()).findCount();
     }
 
     public int getNumberOfNotes() {
